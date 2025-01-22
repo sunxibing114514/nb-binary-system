@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>牛逼二进制</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 20px;
+    }
+    textarea {
+      width: 80%;
+      height: 100px;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>文字与牛逼二进制转换</h1>
+  <textarea id="inputText" placeholder="输入文字或牛逼二进制..."></textarea><br>
+  <button onclick="textToBinary()">文字转牛逼二进制</button>
+  <button onclick="binaryToText()">牛逼二进制转文字</button>
+  <textarea id="outputText" placeholder="输出结果..." readonly></textarea>
+
+  <script>
+    // 将文字转换为牛逼二进制
+    function textToBinary() {
+      const input = document.getElementById('inputText').value;
+      let binary = '';
+      for (let i = 0; i < input.length; i++) {
+        const bin = input.charCodeAt(i).toString(2).padStart(8, '0');
+        binary += bin.replace(/0/g, '牛').replace(/1/g, '逼') + ' ';
+      }
+      document.getElementById('outputText').value = binary.trim();
+    }
+
+    // 将牛逼二进制转换为文字
+    function binaryToText() {
+      const input = document.getElementById('inputText').value.trim();
+      const binaryArray = input.split(' ');
+      let text = '';
+      try {
+        binaryArray.forEach(bin => {
+          const charCode = parseInt(bin.replace(/牛/g, '0').replace(/逼/g, '1'), 2);
+          if (isNaN(charCode)) throw new Error('Invalid binary format');
+          text += String.fromCharCode(charCode);
+        });
+        document.getElementById('outputText').value = text;
+      } catch (e) {
+        alert('输入的牛逼二进制格式不正确！');
+      }
+    }
+  </script>
+</body>
+</html>
