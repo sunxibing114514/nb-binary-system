@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>文字与牛逼二进制转换</title>
+  <title>二进制与文字转换工具</title>
   <style>
     body {
       margin: 0;
@@ -64,12 +64,6 @@
     #outputText:hover {
       box-shadow: 0 0 15px #ffffff;
     }
-    #copyMessage {
-      margin-top: 10px;
-      font-size: 0.9rem;
-      color: #00ff00;
-      display: none;
-    }
     footer {
       margin-top: 20px;
       font-size: 0.9rem;
@@ -86,16 +80,15 @@
   </style>
 </head>
 <body>
-  <h1>文字与牛逼二进制转换</h1>
+  <h1>二进制与文字转换工具</h1>
   <textarea id="inputText" placeholder="输入文字或牛逼二进制..."></textarea>
   <div>
     <button onclick="textToBinary()">文字转牛逼二进制</button>
     <button onclick="binaryToText()">牛逼二进制转文字</button>
   </div>
   <textarea id="outputText" placeholder="点击以复制结果..." readonly onclick="copyToClipboard()"></textarea>
-  <p id="copyMessage">复制成功！</p>
   <footer>
-    <p>由 <a href="https://space.bilibili.com/2044562667?plat_id=1&share_from=space&share_medium=ipad&share_plat=ios&share_session_id=42B456A3-77D9-409A-A50E-CD5F6C6EFE11&share_source=COPY&share_tag=s_i&spmid=main.space.0.0&timestamp=1737525458&unique_k=dAOmj1N" target="_blank">超炳</a> 制作</p>
+    <p>由 <a href="https://github.com/" target="_blank">你的名字</a> 提供技术支持</p>
   </footer>
   <script>
     // 将文字转换为牛逼二进制
@@ -107,25 +100,32 @@
         binary += bin.replace(/0/g, '牛').replace(/1/g, '逼') + ' ';
       }
       document.getElementById('outputText').value = binary.trim();
-      hideCopyMessage();
     }
 
-    // 将牛逼二进制转换为文字
+    // 牛逼二进制转文字
     function binaryToText() {
       const input = document.getElementById('inputText').value.trim();
       const binaryArray = input.split(' ');
       let text = '';
-      try {
-        binaryArray.forEach(bin => {
-          const charCode = parseInt(bin.replace(/牛/g, '0').replace(/逼/g, '1'), 2);
-          if (isNaN(charCode)) throw new Error('Invalid binary format');
-          text += String.fromCharCode(charCode);
-        });
-        document.getElementById('outputText').value = text;
-        hideCopyMessage();
-      } catch (e) {
-        alert('输入的牛逼二进制格式不正确！');
+      binaryArray.forEach(bin => {
+        const number = binaryToDecimal(bin.replace(/牛/g, '0').replace(/逼/g, '1'));
+        if (isNaN(number)) {
+          alert('输入格式不正确，请检查输入');
+          text = '';
+          return;
+        }
+        text += String.fromCharCode(number);
+      });
+      document.getElementById('outputText').value = text;
+    }
+
+    // 将二进制转换为十进制
+    function binaryToDecimal(binary) {
+      let decimal = 0;
+      for (let i = 0; i < binary.length; i++) {
+        decimal = decimal * 2 + parseInt(binary[i]);
       }
+      return decimal;
     }
 
     // 点击结果框复制到剪贴板
@@ -133,21 +133,7 @@
       const outputText = document.getElementById('outputText');
       outputText.select();
       document.execCommand('copy');
-      showCopyMessage();
-    }
-
-    // 显示复制成功的消息
-    function showCopyMessage() {
-      const copyMessage = document.getElementById('copyMessage');
-      copyMessage.style.display = 'block';
-      setTimeout(() => {
-        copyMessage.style.display = 'none';
-      }, 2000);
-    }
-
-    // 隐藏复制成功的消息
-    function hideCopyMessage() {
-      document.getElementById('copyMessage').style.display = 'none';
+      alert('复制成功！');
     }
   </script>
 </body>
