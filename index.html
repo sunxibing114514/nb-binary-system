@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>牛逼二进制</title>
+  <title>文字与牛逼二进制转换</title>
   <style>
     body {
       margin: 0;
@@ -59,6 +59,16 @@
     #outputText {
       background: rgba(255, 255, 255, 0.1);
       color: #ffffff;
+      cursor: pointer;
+    }
+    #outputText:hover {
+      box-shadow: 0 0 15px #ffffff;
+    }
+    #copyMessage {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #00ff00;
+      display: none;
     }
     footer {
       margin-top: 20px;
@@ -76,15 +86,16 @@
   </style>
 </head>
 <body>
-  <h1>牛逼二进制</h1>
+  <h1>文字与牛逼二进制转换</h1>
   <textarea id="inputText" placeholder="输入文字或牛逼二进制..."></textarea>
   <div>
     <button onclick="textToBinary()">文字转牛逼二进制</button>
     <button onclick="binaryToText()">牛逼二进制转文字</button>
   </div>
-  <textarea id="outputText" placeholder="输出结果..." readonly></textarea>
+  <textarea id="outputText" placeholder="点击以复制结果..." readonly onclick="copyToClipboard()"></textarea>
+  <p id="copyMessage">复制成功！</p>
   <footer>
-    <p>由 <a href="https://github.com/" target="_blank">超炳</a> 完成</p>
+    <p>由 <a href="https://github.com/" target="_blank">你的名字</a> 提供技术支持</p>
   </footer>
   <script>
     // 将文字转换为牛逼二进制
@@ -96,6 +107,7 @@
         binary += bin.replace(/0/g, '牛').replace(/1/g, '逼') + ' ';
       }
       document.getElementById('outputText').value = binary.trim();
+      hideCopyMessage();
     }
 
     // 将牛逼二进制转换为文字
@@ -110,9 +122,32 @@
           text += String.fromCharCode(charCode);
         });
         document.getElementById('outputText').value = text;
+        hideCopyMessage();
       } catch (e) {
         alert('输入的牛逼二进制格式不正确！');
       }
+    }
+
+    // 点击结果框复制到剪贴板
+    function copyToClipboard() {
+      const outputText = document.getElementById('outputText');
+      outputText.select();
+      document.execCommand('copy');
+      showCopyMessage();
+    }
+
+    // 显示复制成功的消息
+    function showCopyMessage() {
+      const copyMessage = document.getElementById('copyMessage');
+      copyMessage.style.display = 'block';
+      setTimeout(() => {
+        copyMessage.style.display = 'none';
+      }, 2000);
+    }
+
+    // 隐藏复制成功的消息
+    function hideCopyMessage() {
+      document.getElementById('copyMessage').style.display = 'none';
     }
   </script>
 </body>
