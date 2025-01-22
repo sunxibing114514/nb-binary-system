@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>二进制与文字转换工具</title>
+  <title>牛逼转换工具</title>
   <style>
     body {
       margin: 0;
@@ -80,18 +80,18 @@
   </style>
 </head>
 <body>
-  <h1>二进制与文字转换工具</h1>
-  <textarea id="inputText" placeholder="输入文字或牛逼二进制..."></textarea>
+  <h1>牛逼码转换工具</h1>
+  <textarea id="inputText" placeholder="输入文字或牛逼码..."></textarea>
   <div>
-    <button onclick="textToBinary()">文字转牛逼二进制</button>
-    <button onclick="binaryToText()">牛逼二进制转文字</button>
+    <button onclick="textToBinary()">文字转牛逼码</button>
+    <button onclick="binaryToText()">牛逼码转文字</button>
   </div>
   <textarea id="outputText" placeholder="点击以复制结果..." readonly onclick="copyToClipboard()"></textarea>
   <footer>
-    <p>由 <a href="https://github.com/" target="_blank">你的名字</a> 提供技术支持</p>
+    <p>由 <a href="https://space.bilibili.com/2044562667?plat_id=1&share_from=space&share_medium=ipad&share_plat=ios&share_session_id=42B456A3-77D9-409A-A50E-CD5F6C6EFE11&share_source=COPY&share_tag=s_i&spmid=main.space.0.0&timestamp=1737525458&unique_k=dAOmj1N" target="_blank">超炳</a> 制作</p>
   </footer>
   <script>
-    // 将文字转换为牛逼二进制
+    // 将文字转换为牛逼码
     function textToBinary() {
       const input = document.getElementById('inputText').value;
       let binary = '';
@@ -102,7 +102,7 @@
       document.getElementById('outputText').value = binary.trim();
     }
 
-    // 牛逼二进制转文字
+    // 牛逼吗转文字
     function binaryToText() {
       const input = document.getElementById('inputText').value.trim();
       const binaryArray = input.split(' ');
@@ -119,7 +119,7 @@
       document.getElementById('outputText').value = text;
     }
 
-    // 将二进制转换为十进制
+    // 将牛逼码转换为十进制
     function binaryToDecimal(binary) {
       let decimal = 0;
       for (let i = 0; i < binary.length; i++) {
