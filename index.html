@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>牛逼转换工具</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>文字与牛逼码转换器</title>
   <style>
     body {
       margin: 0;
@@ -64,6 +64,10 @@
     #outputText:hover {
       box-shadow: 0 0 15px #ffffff;
     }
+    input[type="file"] {
+      margin-top: 10px;
+      color: #fff;
+    }
     footer {
       margin-top: 20px;
       font-size: 0.9rem;
@@ -80,18 +84,24 @@
   </style>
 </head>
 <body>
-  <h1>牛逼码转换工具</h1>
+  <h1>文字与牛逼码转换器</h1>
+
+  <input type="file" accept=".txt" onchange="handleFileUpload(event)">
   <textarea id="inputText" placeholder="输入文字或牛逼码..."></textarea>
+  
   <div>
     <button onclick="textToBinary()">文字转牛逼码</button>
     <button onclick="binaryToText()">牛逼码转文字</button>
+    <button onclick="exportTxt()">导出结果为 TXT 文件</button>
   </div>
+  
   <textarea id="outputText" placeholder="点击以复制结果..." readonly onclick="copyToClipboard()"></textarea>
+
   <footer>
-    <p>由 <a href="https://space.bilibili.com/2044562667?plat_id=1&share_from=space&share_medium=ipad&share_plat=ios&share_session_id=42B456A3-77D9-409A-A50E-CD5F6C6EFE11&share_source=COPY&share_tag=s_i&spmid=main.space.0.0&timestamp=1737525458&unique_k=dAOmj1N" target="_blank">超炳</a> 制作</p>
+    <p>由 <a href="https://github.com/" target="_blank">超炳</a> 制作</p>
   </footer>
+
   <script>
-    // 将文字转换为牛逼码
     function textToBinary() {
       const input = document.getElementById('inputText').value;
       let binary = '';
@@ -102,7 +112,6 @@
       document.getElementById('outputText').value = binary.trim();
     }
 
-    // 牛逼吗转文字
     function binaryToText() {
       const input = document.getElementById('inputText').value.trim();
       const binaryArray = input.split(' ');
@@ -119,7 +128,6 @@
       document.getElementById('outputText').value = text;
     }
 
-    // 将牛逼码转换为十进制
     function binaryToDecimal(binary) {
       let decimal = 0;
       for (let i = 0; i < binary.length; i++) {
@@ -128,12 +136,35 @@
       return decimal;
     }
 
-    // 点击结果框复制到剪贴板
     function copyToClipboard() {
       const outputText = document.getElementById('outputText');
       outputText.select();
       document.execCommand('copy');
       alert('复制成功！');
+    }
+
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (file && file.type === "text/plain") {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const content = e.target.result;
+          document.getElementById('inputText').value = content;
+          textToBinary(); // 上传后直接转换
+        };
+        reader.readAsText(file, 'utf-8');
+      } else {
+        alert("请上传 .txt 文本文件！");
+      }
+    }
+
+    function exportTxt() {
+      const content = document.getElementById('outputText').value;
+      const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "转换结果.txt";
+      link.click();
     }
   </script>
 </body>
